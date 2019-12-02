@@ -8,9 +8,7 @@ dayOne = do
   print $ fuelForModules (map read words)
 
 getWords :: FilePath -> IO [String]
-getWords path = do
-  contents <- readFile path
-  return (lines contents)
+getWords = fmap lines . readFile
 
 fuelForModules :: [Integer] -> Integer
 fuelForModules =
@@ -21,5 +19,7 @@ calculateFuel fuel = (fuel `div` 3) - 2
 
 fuelForFuel :: Integer -> Integer
 fuelForFuel fuel
-  | calculateFuel fuel <= 0 = fuel
-  | otherwise = fuel + fuelForFuel (calculateFuel fuel)
+  | calcFuel <= 0 = fuel
+  | otherwise = fuel + fuelForFuel calcFuel
+  where
+    calcFuel = calculateFuel fuel
